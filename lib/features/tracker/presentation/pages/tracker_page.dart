@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bpm_tracker/core/theme/app_colors.dart';
 import 'package:bpm_tracker/core/widgets/glass_container.dart';
+import 'package:bpm_tracker/core/widgets/banner_ad_widget.dart';
 import 'package:bpm_tracker/features/history/presentation/history_page.dart';
 import 'package:bpm_tracker/features/history/presentation/history_provider.dart';
 import 'package:bpm_tracker/features/tracker/presentation/providers/bpm_provider.dart';
@@ -237,15 +238,11 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                   const Spacer(),
 
                   // 4. Ad Space Area
-                  Container(
+                  const SizedBox(
                     width: double.infinity,
                     height: 80,
-                    color: Colors.white.withOpacity(0.01),
-                    child: const Center(
-                      child: Text(
-                        'AD SPACE RESERVED',
-                        style: TextStyle(color: Colors.white10, fontSize: 10, letterSpacing: 2),
-                      ),
+                    child: Center(
+                      child: BannerAdWidget(),
                     ),
                   ),
                 ],
