@@ -7,6 +7,7 @@ import 'package:bpm_tracker/core/widgets/banner_ad_widget.dart';
 import 'package:bpm_tracker/features/history/presentation/history_page.dart';
 import 'package:bpm_tracker/features/history/presentation/history_provider.dart';
 import 'package:bpm_tracker/features/tracker/presentation/providers/bpm_provider.dart';
+import 'package:bpm_tracker/features/settings/presentation/settings_page.dart';
 
 class TrackerPage extends ConsumerStatefulWidget {
   const TrackerPage({super.key});
@@ -68,19 +69,30 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
 
             // App Bar Actions
             SafeArea(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    icon: const Icon(Icons.history, color: Colors.white, size: 28),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HistoryPage()),
-                      );
-                    },
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.settings, color: Colors.white, size: 28),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SettingsPage()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.history, color: Colors.white, size: 28),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HistoryPage()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

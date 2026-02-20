@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bpm_tracker/features/tracker/domain/bpm_calculator.dart';
+import 'package:bpm_tracker/features/settings/presentation/settings_provider.dart';
 
 class BPMState {
   final int bpm;
@@ -44,6 +45,8 @@ class BPMNotifier extends Notifier<BPMState> {
     return BPMState();
   }
 
+  bool get _hapticsEnabled => ref.read(settingsProvider).isHapticsEnabled;
+
   void tap() {
     if (state.isFinished) {
       reset();
@@ -51,7 +54,9 @@ class BPMNotifier extends Notifier<BPMState> {
     _inactivityTimer?.cancel();
 
     // Haptic feedback on tap
-    HapticFeedback.lightImpact();
+    if (_hapticsEnabled) {
+      HapticFeedback.lightImpact();
+    }
 
     final now = DateTime.now();
     final List<DateTime> currentTaps = [...state.taps, now];
@@ -75,7 +80,9 @@ class BPMNotifier extends Notifier<BPMState> {
   }
 
   void _finishSession() {
-    HapticFeedback.heavyImpact();
+    if (_hapticsEnabled) {
+      HapticFeedback.heavyImpact();
+    }
     state = state.copyWith(isFinished: true);
   }
 
