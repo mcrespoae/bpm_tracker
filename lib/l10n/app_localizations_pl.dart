@@ -9,7 +9,7 @@ class AppLocalizationsPl extends AppLocalizations {
   AppLocalizationsPl([String locale = 'pl']) : super(locale);
 
   @override
-  String get appTitle => 'BPM TRACKER';
+  String get appTitle => 'METRA';
 
   @override
   String get bpm => 'BPM';

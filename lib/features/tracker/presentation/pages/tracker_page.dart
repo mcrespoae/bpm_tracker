@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bpm_tracker/l10n/app_localizations.dart';
-import 'package:bpm_tracker/core/theme/app_colors.dart';
-import 'package:bpm_tracker/core/widgets/glass_container.dart';
-import 'package:bpm_tracker/core/widgets/banner_ad_widget.dart';
-import 'package:bpm_tracker/features/history/presentation/history_page.dart';
-import 'package:bpm_tracker/features/history/presentation/history_provider.dart';
-import 'package:bpm_tracker/features/tracker/presentation/providers/bpm_provider.dart';
-import 'package:bpm_tracker/features/settings/presentation/settings_page.dart';
+import 'package:metra/l10n/app_localizations.dart';
+import 'package:metra/core/theme/app_colors.dart';
+import 'package:metra/core/widgets/glass_container.dart';
+import 'package:metra/core/widgets/banner_ad_widget.dart';
+import 'package:metra/features/history/presentation/history_page.dart';
+import 'package:metra/features/history/presentation/history_provider.dart';
+import 'package:metra/features/tracker/presentation/providers/bpm_provider.dart';
+import 'package:metra/features/settings/presentation/settings_page.dart';
 
 class TrackerPage extends ConsumerStatefulWidget {
   const TrackerPage({super.key});

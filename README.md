@@ -1,14 +1,17 @@
-# BPM Tracker
+# METRA
 
 A premium, high-precision BPM (Beats Per Minute) tracking application built with Flutter. Designed with a modern glassmorphism aesthetic, it provides real-time tempo analysis with statistical accuracy feedback.
+
+![METRA Logo](assets/images/logo.png)
 
 ## Features
 - **High-Precision Analysis**: Averages the last 25 taps for high stability.
 - **Accuracy HUD**: Real-time display of ± Standard Deviation and Accuracy % (Coefficient of Variation).
 - **Intelligent Inactivity Detection**: Auto-finalizes measurements after 2 seconds of inactivity.
 - **Premium UI**: Dark mode with smooth glassmorphism effects and reactive animations.
+- **Multi-Language Support**: Fully localized into 11 languages (English, Spanish, Portuguese, French, German, Italian, Polish, Japanese, Chinese Simplified, Hindi, Russian).
 - **Persistent History**: Keeps the latest 10 measurements with swipe-to-delete support.
-- **Tactile Feedback**: Haptic confirmation for every tap and measurement completion.
+- **Smart Ad Integration**: Environment-aware AdMob implementation (Test ads in debug, Real ads in release).
 
 ---
 
@@ -20,38 +23,54 @@ A premium, high-precision BPM (Beats Per Minute) tracking application built with
 - An Android Emulator or physical device
 
 ### Installation
-1.  **Clone the project** or copy the folder to your computer.
-2.  **Fetch dependencies**:
+1.  **Fetch dependencies**:
     ```bash
     flutter pub get
     ```
-3.  **Generate Native Splash**:
-    This is required to set up the black startup screen:
+2.  **Generate Assets**:
+    Generate the app icons and native splash screen:
     ```bash
+    flutter pub run flutter_launcher_icons
     flutter pub run flutter_native_splash:create
     ```
-4.  **Run the app**:
+3.  **Run the app**:
     ```bash
     flutter run
     ```
 
 ---
 
-## Developer Guide
+## Maintenance Guide
 
-### Debugging
--   **Hot Reload**: Press `r` in the terminal or use your IDE's lightning icon to apply UI changes instantly.
--   **Debug Console**: View real-time logs and standard deviation updates.
+### Asset Generation
+If you update `assets/images/logo.png`, run these to update the app:
+- **App Icons**: `flutter pub run flutter_launcher_icons`
+- **Splash Screen**: `flutter pub run flutter_native_splash:create`
+
+### Localization
+To apply changes made to the `.arb` files or add new languages:
+```bash
+flutter gen-l10n
+```
 
 ### Creating Builds
--   **Android APK**:
+
+#### Android
+- **APK (for direct install)**:
     ```bash
     flutter build apk --release
     ```
--   **Android App Bundle (for Play Store)**:
+- **App Bundle (for Google Play)**:
     ```bash
     flutter build appbundle
     ```
+
+#### iOS
+- **iOS Build**:
+    ```bash
+    flutter build ios --release
+    ```
+    *Note: Final archiving must be done in Xcode.*
 
 ---
 
@@ -59,24 +78,19 @@ A premium, high-precision BPM (Beats Per Minute) tracking application built with
 
 The project follows a **Feature-First Clean Architecture** with **Riverpod** for state management.
 
-### [Core](file:///c:/Users/Mario/Documents/bpm_tracker/lib/core)
--   `theme/`: Contains `app_theme.dart` and `app_colors.dart` for the global design system.
--   `widgets/`: Shared UI components like `glass_container.dart`.
+### [Core](lib/core)
+-   `theme/`: Design system (colors, typography).
+-   `ads/`: Centralized `AdHelper` for environment-based AdMob IDs.
+-   `widgets/`: Shared UI components (GlassContainer, BannerAdWidget).
 
-### [Features](file:///c:/Users/Mario/Documents/bpm_tracker/lib/features)
-#### 1. [Tracker (Main Engine)](file:///c:/Users/Mario/Documents/bpm_tracker/lib/features/tracker)
--   `domain/bpm_calculator.dart`: The core logic for rolling averages and statistical accuracy.
--   `presentation/providers/bpm_provider.dart`: Reactive state management for the tapping session.
--   `presentation/pages/tracker_page.dart`: The main UI with animations and status feedback.
+### [Features](lib/features)
+#### 1. [Tracker](lib/features/tracker)
+-   Core engine for rolling averages and statistical accuracy.
+-   Main tapping interface with real-time feedback.
 
-#### 2. [History (Persistence)](file:///c:/Users/Mario/Documents/bpm_tracker/lib/features/history)
--   `domain/bpm_record.dart`: The data model for saved measurements (BPM + Accuracy + Timestamp).
--   `data/history_repository.dart`: Handles `shared_preferences` storage and the 10-item limit logic.
--   `presentation/history_page.dart`: List view with swipe-to-delete (Right-to-Left) and color-coded accuracy.
+#### 2. [History](lib/features/history)
+-   Local storage implementation for persistent records.
+-   List view with swipe-to-delete functionality.
 
----
-
-## TODO List
-- [ ] **Builds**: Finalize iOS build configuration and icons.
-- [ ] **Logos**: Replace temporary black splash with a branded high-res logo.
-- [ ] **Publicity**: Integrate AdMob banner in the reserved 80px space at the bottom of `TrackerPage`.
+#### 3. [Settings](lib/features/settings)
+-   App preferences, haptics control, and developer links.

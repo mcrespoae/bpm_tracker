@@ -1,4 +1,4 @@
-package com.example.bpm_tracker
+package com.example.metra
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bpm_tracker/features/tracker/domain/bpm_calculator.dart';
-import 'package:bpm_tracker/features/settings/presentation/settings_provider.dart';
+import 'package:metra/features/tracker/domain/bpm_calculator.dart';
+import 'package:metra/features/settings/presentation/settings_provider.dart';
 
 class BPMState {
   final int bpm;

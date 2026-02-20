@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:metra/core/ads/ad_helper.dart';
 
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
@@ -13,11 +13,6 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
-  // Test Ad Unit IDs
-  final String _adUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/6300978111'
-      : 'ca-app-pub-3940256099942544/2934735716';
-
   @override
   void initState() {
     super.initState();
@@ -25,8 +20,14 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   }
 
   void _loadAd() {
+    final adUnitId = AdHelper.bannerAdUnitId;
+    if (adUnitId == null) {
+      debugPrint('Ads not supported on this platform.');
+      return;
+    }
+
     _bannerAd = BannerAd(
-      adUnitId: _adUnitId,
+      adUnitId: adUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
@@ -58,6 +59,11 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         height: _bannerAd!.size.height.toDouble(),
         child: AdWidget(ad: _bannerAd!),
       );
+    }
+
+    // If ad is not supported or still loading
+    if (AdHelper.bannerAdUnitId == null) {
+      return const SizedBox.shrink();
     }
 
     return const SizedBox(

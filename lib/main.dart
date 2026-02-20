@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:bpm_tracker/l10n/app_localizations.dart';
+import 'package:metra/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 import 'features/tracker/presentation/pages/tracker_page.dart';
 
@@ -11,18 +11,18 @@ void main() {
   MobileAds.instance.initialize();
   runApp(
     const ProviderScope(
-      child: BPMTrackerApp(),
+      child: MetraApp(),
     ),
   );
 }
 
-class BPMTrackerApp extends StatelessWidget {
-  const BPMTrackerApp({super.key});
+class MetraApp extends StatelessWidget {
+  const MetraApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BPM Tracker',
+      title: 'METRA',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       localizationsDelegates: [

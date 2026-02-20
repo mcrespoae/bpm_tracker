@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bpm_tracker/l10n/app_localizations.dart';
+import 'package:metra/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:bpm_tracker/core/theme/app_colors.dart';
-import 'package:bpm_tracker/core/widgets/glass_container.dart';
-import 'package:bpm_tracker/core/widgets/banner_ad_widget.dart';
+import 'package:metra/core/theme/app_colors.dart';
+import 'package:metra/core/widgets/glass_container.dart';
+import 'package:metra/core/widgets/banner_ad_widget.dart';
 import 'history_provider.dart';
 
 class HistoryPage extends ConsumerWidget {

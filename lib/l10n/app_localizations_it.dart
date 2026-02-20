@@ -9,7 +9,7 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
-  String get appTitle => 'BPM TRACKER';
+  String get appTitle => 'METRA';
 
   @override
   String get bpm => 'BPM';

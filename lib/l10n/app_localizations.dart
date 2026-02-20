@@ -119,7 +119,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'BPM TRACKER'**
+  /// **'METRA'**
   String get appTitle;
 
   /// No description provided for @bpm.

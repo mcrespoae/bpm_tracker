@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:bpm_tracker/l10n/app_localizations.dart';
-import 'package:bpm_tracker/core/theme/app_colors.dart';
-import 'package:bpm_tracker/core/widgets/glass_container.dart';
-import 'package:bpm_tracker/features/settings/presentation/settings_provider.dart';
+import 'package:metra/l10n/app_localizations.dart';
+import 'package:metra/core/theme/app_colors.dart';
+import 'package:metra/core/widgets/glass_container.dart';
+import 'package:metra/features/settings/presentation/settings_provider.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -45,6 +45,31 @@ class SettingsPage extends ConsumerWidget {
                   child: ListView(
                     padding: const EdgeInsets.all(16),
                     children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24.0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                'assets/images/logo_bg.png',
+                                height: 80,
+                                filterQuality: FilterQuality.high,
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                'METRA',
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.9),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 4,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       _buildSectionHeader(context, l10n.preferences),
                       _buildHapticToggle(ref, settings.isHapticsEnabled, l10n.hapticFeedback),
                     ],
@@ -92,7 +117,7 @@ class SettingsPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       InkWell(
-                        onTap: () => _launchURL('https://www.buymeacoffee.com'),
+                        onTap: () => _launchURL('https://buymeacoffee.com/mcrespo'),
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

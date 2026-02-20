@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'BPM 测量器';
+  String get appTitle => 'METRA';
 
   @override
   String get bpm => 'BPM';
