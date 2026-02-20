@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:bpm_tracker/l10n/app_localizations.dart';
 import 'package:bpm_tracker/core/theme/app_colors.dart';
 import 'package:bpm_tracker/core/widgets/glass_container.dart';
 import 'package:bpm_tracker/core/widgets/banner_ad_widget.dart';
@@ -23,6 +24,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
   @override
   Widget build(BuildContext context) {
     final bpmState = ref.watch(bpmProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     // Toned down red color
     const Color softRed = Color(0xFFFF6B6B);
@@ -62,7 +64,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                 height: 300,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: primaryColor.withOpacity(0.1),
+                  color: primaryColor.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -103,7 +105,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                    // 1. Title
                   const SizedBox(height: 80),
                   Text(
-                    'BPM TRACKER',
+                    l10n.appTitle,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           letterSpacing: 4,
                           fontWeight: FontWeight.w300,
@@ -131,7 +133,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                                 color: primaryColor,
                                 shadows: [
                                   Shadow(
-                                    color: primaryColor.withOpacity(0.3),
+                                    color: primaryColor.withValues(alpha: 0.3),
                                     blurRadius: 20,
                                   ),
                                 ],
@@ -139,7 +141,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                               child: Text('${bpmState.bpm}'),
                             ),
                             Text(
-                              'BPM',
+                              l10n.bpm,
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 letterSpacing: 4,
                                 color: AppColors.textSecondary,
@@ -151,7 +153,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                               child: Center(
                                 child: (bpmState.bpm > 0)
                                     ? Text(
-                                        '±${bpmState.stdDev.toStringAsFixed(1)} · ${bpmState.accuracy.toStringAsFixed(1)}% ACC',
+                                        '±${bpmState.stdDev.toStringAsFixed(1)} · ${bpmState.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: accuracyColor,
@@ -186,7 +188,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        _buildStatusText(bpmState),
+                        _buildStatusText(bpmState, l10n),
 
                         SizedBox(
                           height: 80,
@@ -204,7 +206,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                                         side: const BorderSide(color: Colors.white10),
                                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                       ),
-                                      child: const Text('RESET'),
+                                      child: Text(l10n.reset),
                                     ),
                                     if (bpmState.isFinished) ...[
                                       const SizedBox(width: 16),
@@ -214,8 +216,8 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                                           ref.read(bpmProvider.notifier).reset();
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             SnackBar(
-                                              content: const Text('RECORD SAVED', textAlign: TextAlign.center),
-                                              backgroundColor: (accuracyColor == softRed ? softRed : primaryColor).withOpacity(0.7),
+                                              content: Text(l10n.recordSaved, textAlign: TextAlign.center),
+                                              backgroundColor: (accuracyColor == softRed ? softRed : primaryColor).withValues(alpha: 0.7),
                                               behavior: SnackBarBehavior.floating,
                                               margin: EdgeInsets.only(
                                                 bottom: MediaQuery.of(context).size.height - 130,
@@ -231,11 +233,11 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                                           );
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: (accuracyColor == softRed ? softRed : primaryColor).withOpacity(0.8),
+                                          backgroundColor: (accuracyColor == softRed ? softRed : primaryColor).withValues(alpha: 0.8),
                                           foregroundColor: Colors.black,
                                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                         ),
-                                        child: const Text('SAVE'),
+                                        child: Text(l10n.save),
                                       ).animate().scale().fadeIn(),
                                     ],
                                   ],
@@ -266,11 +268,11 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
     );
   }
 
-  Widget _buildStatusText(BPMState state) {
+  Widget _buildStatusText(BPMState state, AppLocalizations l10n) {
     if (state.bpm == 0) {
-      return const Text(
-        'TAP ANYWHERE TO START',
-        style: TextStyle(letterSpacing: 2, color: AppColors.textSecondary),
+      return Text(
+        l10n.tapToStart,
+        style: const TextStyle(letterSpacing: 2, color: AppColors.textSecondary),
       ).animate(onPlay: (c) => c.repeat(reverse: true)).fadeIn(duration: 1.seconds);
     }
 
@@ -278,7 +280,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
       const Color softRed = Color(0xFFFF6B6B);
       Color finishedColor = state.accuracy < 80 ? softRed : const Color(0xFF00FF95);
       return Text(
-        'MEASUREMENT COMPLETE',
+        l10n.measurementComplete,
         style: TextStyle(
           letterSpacing: 2,
           color: finishedColor,
@@ -287,9 +289,9 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
       ).animate().fadeIn().shake();
     }
 
-    return const Text(
-      'KEEP TAPPING',
-      style: TextStyle(letterSpacing: 1, color: Colors.white24),
+    return Text(
+      l10n.keepTapping,
+      style: const TextStyle(letterSpacing: 1, color: Colors.white24),
     ).animate().fadeIn();
   }
 }

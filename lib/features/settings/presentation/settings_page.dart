@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:bpm_tracker/l10n/app_localizations.dart';
 import 'package:bpm_tracker/core/theme/app_colors.dart';
 import 'package:bpm_tracker/core/widgets/glass_container.dart';
 import 'package:bpm_tracker/features/settings/presentation/settings_provider.dart';
@@ -12,10 +13,11 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SETTINGS', style: TextStyle(letterSpacing: 2)),
+        title: Text(l10n.settings, style: const TextStyle(letterSpacing: 2)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -31,7 +33,7 @@ class SettingsPage extends ConsumerWidget {
                height: 250,
                decoration: BoxDecoration(
                  shape: BoxShape.circle,
-                 color: AppColors.primary.withOpacity(0.05),
+                 color: AppColors.primary.withValues(alpha: 0.05),
                ),
              ),
           ),
@@ -43,8 +45,8 @@ class SettingsPage extends ConsumerWidget {
                   child: ListView(
                     padding: const EdgeInsets.all(16),
                     children: [
-                      _buildSectionHeader(context, 'PREFERENCES'),
-                      _buildHapticToggle(ref, settings.isHapticsEnabled),
+                      _buildSectionHeader(context, l10n.preferences),
+                      _buildHapticToggle(ref, settings.isHapticsEnabled, l10n.hapticFeedback),
                     ],
                   ),
                 ),
@@ -65,9 +67,9 @@ class SettingsPage extends ConsumerWidget {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         spacing: 8,
                         children: [
-                          const Text(
-                            'made with love by',
-                            style: TextStyle(
+                          Text(
+                            l10n.madeWithLove,
+                            style: const TextStyle(
                               color: Colors.white24,
                               fontSize: 10,
                               letterSpacing: 1,
@@ -98,14 +100,14 @@ class SettingsPage extends ConsumerWidget {
                             border: Border.all(color: Colors.white10),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.coffee, size: 12, color: Colors.white38),
-                              SizedBox(width: 8),
+                              const Icon(Icons.coffee, size: 12, color: Colors.white38),
+                              const SizedBox(width: 8),
                               Text(
-                                'Buy me a coffee',
-                                style: TextStyle(
+                                l10n.buyMeCoffee,
+                                style: const TextStyle(
                                   color: Colors.white38,
                                   fontSize: 10,
                                   letterSpacing: 1,
@@ -156,22 +158,23 @@ class SettingsPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildHapticToggle(WidgetRef ref, bool value) {
+  Widget _buildHapticToggle(WidgetRef ref, bool value, String label) {
     return GlassContainer(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.vibration, color: AppColors.primary, size: 20),
+              const Icon(Icons.vibration, color: AppColors.primary, size: 20),
               const SizedBox(width: 16),
-              Text('Haptic Feedback', style: TextStyle(color: Colors.white)),
+              Text(label, style: const TextStyle(color: Colors.white)),
             ],
           ),
           Switch.adaptive(
             value: value,
-            activeColor: AppColors.primary,
+            activeTrackColor: AppColors.primary,
+            activeThumbColor: Colors.white,
             onChanged: (val) => ref.read(settingsProvider.notifier).toggleHaptics(val),
           ),
         ],
