@@ -43,6 +43,7 @@ class MetraApp extends StatelessWidget {
         Locale('zh'),
         Locale('hi'),
         Locale('ru'),
+        Locale('ca'),
       ],
       home: const TrackerPage(),
     );

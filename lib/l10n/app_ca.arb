@@ -1,0 +1,41 @@
+{
+  "appTitle": "METRA",
+  "bpm": "BPM",
+  "history": "HISTORIAL",
+  "settings": "AJUSTES",
+  "noRecords": "SENSE REGISTRES",
+  "bpmRecord": "REGISTRE BPM",
+  "acc": "ACC",
+  "tapToStart": "TOCA A QUALSEVOL LLOC PER COMENÇAR",
+  "keepTapping": "SEGUEIX TOCANT",
+  "measurementComplete": "MESURAMENT COMPLETAT",
+  "reset": "REINICIAR",
+  "save": "DESAR",
+  "recordSaved": "REGISTRE DESAT",
+  "preferences": "PREFERÈNCIES",
+  "hapticFeedback": "Vibració",
+  "clearHistory": "Esborra tot l'historial",
+  "about": "SOBRE",
+  "devWebsite": "Lloc web del desenvolupador",
+  "buyMeCoffee": "Convida'm a un cafè",
+  "madeWithLove": "fet amb amor per",
+  "clearHistoryQuestion": "Esborrar historial?",
+  "clearHistoryWarning": "Això eliminarà permanentment tots els teus registres de BPM.",
+  "cancel": "CANCEL·LAR",
+  "clear": "ESBORRAR",
+  "historyCleared": "Historial esborrat",
+  "saveNameTitle": "NOMENAR SESSIÓ",
+  "renameRecord": "Renomenar registre",
+  "nameHint": "Nom de la sessió (opcional)",
+  "unnamed": "Sense nom",
+  "overrideOldest": "Sobreescriure antics",
+  "historyFull": "HISTORIAL PLE",
+  "maxRecordsReached": "Historial ple ({limit} registres). Esborra registres o activa sobreescriure.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
+}
