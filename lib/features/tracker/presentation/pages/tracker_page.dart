@@ -38,7 +38,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
 
     // Conditional styling based on accuracy
     Color accuracyColor = Colors.white38;
-    if (bpmState.bpm > 0) {
+    if (bpmState.bpm > 0 && bpmState.taps.length >= 4) {
       if (bpmState.accuracy < 80) {
         accuracyColor = softRed;
       } else if (bpmState.accuracy > 90) {
@@ -152,7 +152,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                             SizedBox(
                               height: 30,
                               child: Center(
-                                child: (bpmState.bpm > 0)
+                                child: (bpmState.taps.length >= 4)
                                     ? Text(
                                         '±${bpmState.stdDev.toStringAsFixed(1)} ms · ${bpmState.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
                                         style: TextStyle(

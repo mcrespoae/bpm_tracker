@@ -5,7 +5,7 @@ import '../domain/bpm_record.dart';
 
 class HistoryRepository {
   static const String _key = 'bpm_history';
-  static const int maxItems = 10;
+  static const int maxItems = 20;
 
   Future<void> saveRecord(BPMRecord record) async {
     final prefs = await SharedPreferences.getInstance();
