@@ -23,5 +23,19 @@
   "clearHistoryWarning": "这将永久删除您的所有 BPM 记录。",
   "cancel": "取消",
   "clear": "清除",
-  "historyCleared": "历史记录已清除"
+  "historyCleared": "历史记录已清除",
+  "saveNameTitle": "命名您的会话",
+  "renameRecord": "重命名记录",
+  "nameHint": "输入会话名称（可选）",
+  "unnamed": "未命名",
+  "overrideOldest": "覆盖最早的记录",
+  "historyFull": "历史记录已满",
+  "maxRecordsReached": "已达到历史记录上限（{limit}条）。要保存新测量值，请从历史记录中删除一条记录，或在设置中启用“覆盖最早的记录”。",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

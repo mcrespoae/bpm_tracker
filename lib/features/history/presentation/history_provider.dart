@@ -5,19 +5,28 @@ import '../domain/bpm_record.dart';
 
 class HistoryRepository {
   static const String _key = 'bpm_history';
-  static const int _maxItems = 10;
+  static const int maxItems = 10;
 
   Future<void> saveRecord(BPMRecord record) async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> history = prefs.getStringList(_key) ?? [];
     history.insert(0, record.toJson());
 
-    // Enforce 10 item limit
-    if (history.length > _maxItems) {
-      history.removeRange(_maxItems, history.length);
+    // Enforce item limit
+    if (history.length > maxItems) {
+      history.removeRange(maxItems, history.length);
     }
 
     await prefs.setStringList(_key, history);
+  }
+
+  Future<void> updateRecord(int index, BPMRecord record) async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String> history = prefs.getStringList(_key) ?? [];
+    if (index >= 0 && index < history.length) {
+      history[index] = record.toJson();
+      await prefs.setStringList(_key, history);
+    }
   }
 
   Future<void> deleteRecord(int index) async {
@@ -49,10 +58,32 @@ class HistoryNotifier extends AsyncNotifier<List<BPMRecord>> {
     return ref.read(historyRepositoryProvider).getHistory();
   }
 
-  Future<void> addRecord(int bpm, double accuracy) async {
-    final record = BPMRecord(bpm: bpm, timestamp: DateTime.now(), accuracy: accuracy);
+  Future<void> addRecord(int bpm, double accuracy, double stdDev, String name) async {
+    final record = BPMRecord(
+      bpm: bpm,
+      timestamp: DateTime.now(),
+      accuracy: accuracy,
+      stdDev: stdDev,
+      name: name.isEmpty ? 'Unnamed' : name,
+    );
     await ref.read(historyRepositoryProvider).saveRecord(record);
     state = await AsyncValue.guard(() => ref.read(historyRepositoryProvider).getHistory());
+  }
+
+  Future<void> updateRecordName(int index, String newName) async {
+    final currentHistory = state.value ?? [];
+    if (index >= 0 && index < currentHistory.length) {
+      final oldRecord = currentHistory[index];
+      final newRecord = BPMRecord(
+        bpm: oldRecord.bpm,
+        timestamp: oldRecord.timestamp,
+        accuracy: oldRecord.accuracy,
+        stdDev: oldRecord.stdDev,
+        name: newName.isEmpty ? 'Unnamed' : newName,
+      );
+      await ref.read(historyRepositoryProvider).updateRecord(index, newRecord);
+      state = await AsyncValue.guard(() => ref.read(historyRepositoryProvider).getHistory());
+    }
   }
 
   Future<void> removeRecord(int index) async {

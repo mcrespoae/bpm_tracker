@@ -83,4 +83,27 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get historyCleared => 'Histórico limpo';
+
+  @override
+  String get saveNameTitle => 'NOMEIE SUA SESSÃO';
+
+  @override
+  String get renameRecord => 'RENOMEAR REGISTRO';
+
+  @override
+  String get nameHint => 'Digite o nome da sessão (opcional)';
+
+  @override
+  String get unnamed => 'Sem nome';
+
+  @override
+  String get overrideOldest => 'Substituir mais antigos';
+
+  @override
+  String get historyFull => 'HISTÓRICO CHEIO';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Limite de histórico atingido ($limit registros). Para salvar novas medições, exclua um registro do Histórico ou ative \'Substituir mais antigos\' nos Ajustes.';
+  }
 }

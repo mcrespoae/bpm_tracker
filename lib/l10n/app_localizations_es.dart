@@ -83,4 +83,27 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get historyCleared => 'Historial borrado';
+
+  @override
+  String get saveNameTitle => 'NOMBRAR SESIÓN';
+
+  @override
+  String get renameRecord => 'RENOMBRAR REGISTRO';
+
+  @override
+  String get nameHint => 'Nombre de la sesión (opcional)';
+
+  @override
+  String get unnamed => 'Sin nombre';
+
+  @override
+  String get overrideOldest => 'Sobrescribir antiguos';
+
+  @override
+  String get historyFull => 'HISTORIAL LLENO';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Historial lleno ($limit registros). Borre registros o active sobrescribir.';
+  }
 }

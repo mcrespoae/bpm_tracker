@@ -83,4 +83,27 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get historyCleared => 'Historique effacé';
+
+  @override
+  String get saveNameTitle => 'NOMMER VOTRE SESSION';
+
+  @override
+  String get renameRecord => 'RENOMMER L\'ENREGISTREMENT';
+
+  @override
+  String get nameHint => 'Entrez le nom de la session (facultatif)';
+
+  @override
+  String get unnamed => 'Sans nom';
+
+  @override
+  String get overrideOldest => 'Écraser les plus anciens';
+
+  @override
+  String get historyFull => 'HISTORIQUE PLEIN';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Limite d\'historique atteinte ($limit enregistrements). Pour enregistrer de nouvelles mesures, supprimez un enregistrement de l\'Historique ou activez \'Écraser les plus anciens\' dans les Réglages.';
+  }
 }

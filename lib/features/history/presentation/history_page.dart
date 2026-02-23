@@ -6,6 +6,7 @@ import 'package:metra/core/theme/app_colors.dart';
 import 'package:metra/core/widgets/glass_container.dart';
 import 'package:metra/core/widgets/banner_ad_widget.dart';
 import 'history_provider.dart';
+import '../domain/bpm_record.dart';
 
 class HistoryPage extends ConsumerWidget {
   const HistoryPage({super.key});
@@ -101,11 +102,30 @@ class HistoryPage extends ConsumerWidget {
                           padding: const EdgeInsets.only(bottom: 12),
                           child: Dismissible(
                             key: Key('record_${record.timestamp.millisecondsSinceEpoch}'),
-                            direction: DismissDirection.endToStart, // Swipe Left (Standard)
+                            direction: DismissDirection.horizontal,
+                            confirmDismiss: (direction) async {
+                              if (direction == DismissDirection.startToEnd) {
+                                // Rename
+                                await _showRenameDialog(context, ref, record, index);
+                                return false; // Don't dismiss for rename
+                              }
+                              return true; // Dismiss for delete
+                            },
                             onDismissed: (direction) {
-                              ref.read(historyProvider.notifier).removeRecord(index);
+                              if (direction == DismissDirection.endToStart) {
+                                ref.read(historyProvider.notifier).removeRecord(index);
+                              }
                             },
                             background: Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.only(left: 20),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: const Icon(Icons.edit, color: AppColors.primary),
+                            ),
+                            secondaryBackground: Container(
                               alignment: Alignment.centerRight,
                               padding: const EdgeInsets.only(right: 20),
                               decoration: BoxDecoration(
@@ -142,7 +162,7 @@ class HistoryPage extends ConsumerWidget {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              l10n.bpmRecord,
+                                              record.name,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 14,
@@ -150,7 +170,7 @@ class HistoryPage extends ConsumerWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${record.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
+                                              '±${record.stdDev.toStringAsFixed(1)} ms · ${record.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
                                               style: TextStyle(
                                                 color: accuracyColor,
                                                 fontSize: 12,
@@ -191,6 +211,50 @@ class HistoryPage extends ConsumerWidget {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showRenameDialog(BuildContext context, WidgetRef ref, BPMRecord record, int index) async {
+    final l10n = AppLocalizations.of(context)!;
+    final TextEditingController controller = TextEditingController(text: record.name == l10n.unnamed ? '' : record.name);
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A1A),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white10)),
+        title: Text(l10n.renameRecord, style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 1)),
+        content: TextField(
+          controller: controller,
+          maxLength: 50,
+          autofocus: true,
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            hintText: l10n.nameHint,
+            hintStyle: const TextStyle(color: Colors.white24),
+            counterStyle: const TextStyle(color: Colors.white24),
+            enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white10)),
+            focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.cancel, style: const TextStyle(color: Colors.white38)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ref.read(historyProvider.notifier).updateRecordName(index, controller.text.trim());
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.black,
+            ),
+            child: Text(l10n.save),
           ),
         ],
       ),

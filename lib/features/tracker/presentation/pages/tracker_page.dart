@@ -9,6 +9,7 @@ import 'package:metra/features/history/presentation/history_page.dart';
 import 'package:metra/features/history/presentation/history_provider.dart';
 import 'package:metra/features/tracker/presentation/providers/bpm_provider.dart';
 import 'package:metra/features/settings/presentation/settings_page.dart';
+import 'package:metra/features/settings/presentation/settings_provider.dart';
 
 class TrackerPage extends ConsumerStatefulWidget {
   const TrackerPage({super.key});
@@ -153,7 +154,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                               child: Center(
                                 child: (bpmState.bpm > 0)
                                     ? Text(
-                                        '±${bpmState.stdDev.toStringAsFixed(1)} · ${bpmState.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
+                                        '±${bpmState.stdDev.toStringAsFixed(1)} ms · ${bpmState.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: accuracyColor,
@@ -210,34 +211,33 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                                     ),
                                     if (bpmState.isFinished) ...[
                                       const SizedBox(width: 16),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          ref.read(historyProvider.notifier).addRecord(bpmState.bpm, bpmState.accuracy);
-                                          ref.read(bpmProvider.notifier).reset();
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(
-                                              content: Text(l10n.recordSaved, textAlign: TextAlign.center),
-                                              backgroundColor: (accuracyColor == softRed ? softRed : primaryColor).withValues(alpha: 0.7),
-                                              behavior: SnackBarBehavior.floating,
-                                              margin: EdgeInsets.only(
-                                                bottom: MediaQuery.of(context).size.height - 130,
-                                                left: 50,
-                                                right: 50,
-                                              ),
-                                              elevation: 0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(25),
-                                              ),
-                                              duration: const Duration(seconds: 2),
+                                      Builder(
+                                        builder: (context) {
+                                          final settings = ref.watch(settingsProvider);
+                                          final historyAsync = ref.watch(historyProvider);
+                                          final historyLength = historyAsync.value?.length ?? 0;
+                                          final isFull = historyLength >= 10;
+                                          final canSave = settings.isOverrideEnabled || !isFull;
+
+                                          return ElevatedButton(
+                                            onPressed: () {
+                                              if (canSave) {
+                                                _showSaveNameDialog(context, bpmState.bpm, bpmState.accuracy, bpmState.stdDev);
+                                              } else {
+                                                _showHistoryFullDialog(context);
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: canSave
+                                                ? (accuracyColor == softRed ? softRed : primaryColor).withValues(alpha: 0.8)
+                                                : Colors.transparent,
+                                              foregroundColor: canSave ? Colors.black : Colors.white24,
+                                              side: canSave ? null : const BorderSide(color: Colors.white10),
+                                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                             ),
+                                            child: Text(l10n.save),
                                           );
                                         },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: (accuracyColor == softRed ? softRed : primaryColor).withValues(alpha: 0.8),
-                                          foregroundColor: Colors.black,
-                                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                                        ),
-                                        child: Text(l10n.save),
                                       ).animate().scale().fadeIn(),
                                     ],
                                   ],
@@ -264,6 +264,101 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showHistoryFullDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A1A),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white10)),
+        title: Row(
+          children: [
+            const Icon(Icons.info_outline, color: AppColors.primary),
+            const SizedBox(width: 12),
+            Text(l10n.historyFull, style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 1)),
+          ],
+        ),
+        content: Text(
+          l10n.maxRecordsReached(HistoryRepository.maxItems),
+          style: const TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.black,
+            ),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSaveNameDialog(BuildContext context, int bpm, double accuracy, double stdDev) {
+    final l10n = AppLocalizations.of(context)!;
+    final TextEditingController controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A1A),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white10)),
+        title: Text(l10n.saveNameTitle, style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 1)),
+        content: TextField(
+          controller: controller,
+          maxLength: 50,
+          autofocus: true,
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            hintText: l10n.nameHint,
+            hintStyle: const TextStyle(color: Colors.white24),
+            counterStyle: const TextStyle(color: Colors.white24),
+            enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white10)),
+            focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.cancel, style: const TextStyle(color: Colors.white38)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ref.read(historyProvider.notifier).addRecord(bpm, accuracy, stdDev, controller.text.trim());
+              ref.read(bpmProvider.notifier).reset();
+              Navigator.pop(context);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(l10n.recordSaved, textAlign: TextAlign.center),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.7),
+                  behavior: SnackBarBehavior.floating,
+                  margin: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height - 130,
+                    left: 50,
+                    right: 50,
+                  ),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.black,
+            ),
+            child: Text(l10n.save),
+          ),
+        ],
       ),
     );
   }

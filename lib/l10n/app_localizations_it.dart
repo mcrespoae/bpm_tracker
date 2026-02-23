@@ -83,4 +83,27 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get historyCleared => 'Cronologia cancellata';
+
+  @override
+  String get saveNameTitle => 'NOMINA LA TUA SESSIONE';
+
+  @override
+  String get renameRecord => 'RINOMINA RECORD';
+
+  @override
+  String get nameHint => 'Inserisci il nome della sessione (opzionale)';
+
+  @override
+  String get unnamed => 'Senza nome';
+
+  @override
+  String get overrideOldest => 'Sovrascrivi i più vecchi';
+
+  @override
+  String get historyFull => 'CRONOLOGIA PIENA';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Limite cronologia raggiunto ($limit record). Per salvare nuove misurazioni, elimina un record dalla Cronologia o abilita \'Sovrascrivi i più vecchi\' nelle Impostazioni.';
+  }
 }

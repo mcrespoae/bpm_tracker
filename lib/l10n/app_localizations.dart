@@ -265,6 +265,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'History cleared'**
   String get historyCleared;
+
+  /// No description provided for @saveNameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'NAME YOUR SESSION'**
+  String get saveNameTitle;
+
+  /// No description provided for @renameRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'RENAME RECORD'**
+  String get renameRecord;
+
+  /// No description provided for @nameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter session name (optional)'**
+  String get nameHint;
+
+  /// No description provided for @unnamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Unnamed'**
+  String get unnamed;
+
+  /// No description provided for @overrideOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Override Oldest Records'**
+  String get overrideOldest;
+
+  /// No description provided for @historyFull.
+  ///
+  /// In en, this message translates to:
+  /// **'HISTORY FULL'**
+  String get historyFull;
+
+  /// No description provided for @maxRecordsReached.
+  ///
+  /// In en, this message translates to:
+  /// **'History limit reached ({limit} records). To save new measurements, delete a record from History or enable \'Override Oldest\' in Settings.'**
+  String maxRecordsReached(int limit);
 }
 
 class _AppLocalizationsDelegate

@@ -23,5 +23,19 @@
   "clearHistoryWarning": "To na stałe usunie wszystkie Twoje rekordy BPM.",
   "cancel": "ANULUJ",
   "clear": "WYCZYŚĆ",
-  "historyCleared": "Historia wyczyszczona"
+  "historyCleared": "Historia wyczyszczona",
+  "saveNameTitle": "NAZWIJ SWOJĄ SESJĘ",
+  "renameRecord": "ZMIEŃ NAZWĘ REKORDU",
+  "nameHint": "Wpisz nazwę sesji (opocjonalnie)",
+  "unnamed": "Bez nazwy",
+  "overrideOldest": "Nadpisuj najstarsze rekordy",
+  "historyFull": "HISTORIA PEŁNA",
+  "maxRecordsReached": "Osiągnięto limit historii ({limit} rekordów). Aby zapisać nowe pomiary, usuń rekord z Historii lub włącz 'Nadpisuj najstarsze' w Ustawieniach.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

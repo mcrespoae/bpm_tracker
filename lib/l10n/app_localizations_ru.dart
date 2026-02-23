@@ -82,4 +82,27 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get historyCleared => 'История очищена';
+
+  @override
+  String get saveNameTitle => 'НАЗОВИТЕ СВОЮ СЕССИЮ';
+
+  @override
+  String get renameRecord => 'ПЕРЕИМЕНОВАТЬ ЗАПИСЬ';
+
+  @override
+  String get nameHint => 'Введите название сессии (опционально)';
+
+  @override
+  String get unnamed => 'Без названия';
+
+  @override
+  String get overrideOldest => 'Перезаписывать старые записи';
+
+  @override
+  String get historyFull => 'ИСТОРИЯ ЗАПОЛНЕНА';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Лимит истории достигнут ($limit записей). Чтобы сохранить новые измерения, удалите запись из Истории или включите «Перезаписывать старые записи» в Настройках.';
+  }
 }

@@ -23,5 +23,19 @@
   "clearHistoryWarning": "Isso excluirá permanentemente todos os seus registros de BPM.",
   "cancel": "CANCELAR",
   "clear": "LIMPAR",
-  "historyCleared": "Histórico limpo"
+  "historyCleared": "Histórico limpo",
+  "saveNameTitle": "NOMEIE SUA SESSÃO",
+  "renameRecord": "RENOMEAR REGISTRO",
+  "nameHint": "Digite o nome da sessão (opcional)",
+  "unnamed": "Sem nome",
+  "overrideOldest": "Substituir mais antigos",
+  "historyFull": "HISTÓRICO CHEIO",
+  "maxRecordsReached": "Limite de histórico atingido ({limit} registros). Para salvar novas medições, exclua um registro do Histórico ou ative 'Substituir mais antigos' nos Ajustes.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

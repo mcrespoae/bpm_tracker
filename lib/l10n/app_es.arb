@@ -23,5 +23,19 @@
   "clearHistoryWarning": "Esto eliminará permanentemente todos tus registros de BPM.",
   "cancel": "CANCELAR",
   "clear": "BORRAR",
-  "historyCleared": "Historial borrado"
+  "historyCleared": "Historial borrado",
+  "saveNameTitle": "NOMBRAR SESIÓN",
+  "renameRecord": "RENOMBRAR REGISTRO",
+  "nameHint": "Nombre de la sesión (opcional)",
+  "unnamed": "Sin nombre",
+  "overrideOldest": "Sobrescribir antiguos",
+  "historyFull": "HISTORIAL LLENO",
+  "maxRecordsReached": "Historial lleno ({limit} registros). Borre registros o active sobrescribir.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

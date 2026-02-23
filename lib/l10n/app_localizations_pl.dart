@@ -83,4 +83,27 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get historyCleared => 'Historia wyczyszczona';
+
+  @override
+  String get saveNameTitle => 'NAZWIJ SWOJĄ SESJĘ';
+
+  @override
+  String get renameRecord => 'ZMIEŃ NAZWĘ REKORDU';
+
+  @override
+  String get nameHint => 'Wpisz nazwę sesji (opocjonalnie)';
+
+  @override
+  String get unnamed => 'Bez nazwy';
+
+  @override
+  String get overrideOldest => 'Nadpisuj najstarsze rekordy';
+
+  @override
+  String get historyFull => 'HISTORIA PEŁNA';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Osiągnięto limit historii ($limit rekordów). Aby zapisać nowe pomiary, usuń rekord z Historii lub włącz \'Nadpisuj najstarsze\' w Ustawieniach.';
+  }
 }

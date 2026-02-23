@@ -82,4 +82,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get historyCleared => '历史记录已清除';
+
+  @override
+  String get saveNameTitle => '命名您的会话';
+
+  @override
+  String get renameRecord => '重命名记录';
+
+  @override
+  String get nameHint => '输入会话名称（可选）';
+
+  @override
+  String get unnamed => '未命名';
+
+  @override
+  String get overrideOldest => '覆盖最早的记录';
+
+  @override
+  String get historyFull => '历史记录已满';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return '已达到历史记录上限（$limit条）。要保存新测量值，请从历史记录中删除一条记录，或在设置中启用“覆盖最早的记录”。';
+  }
 }

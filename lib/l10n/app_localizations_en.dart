@@ -83,4 +83,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get historyCleared => 'History cleared';
+
+  @override
+  String get saveNameTitle => 'NAME YOUR SESSION';
+
+  @override
+  String get renameRecord => 'RENAME RECORD';
+
+  @override
+  String get nameHint => 'Enter session name (optional)';
+
+  @override
+  String get unnamed => 'Unnamed';
+
+  @override
+  String get overrideOldest => 'Override Oldest Records';
+
+  @override
+  String get historyFull => 'HISTORY FULL';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'History limit reached ($limit records). To save new measurements, delete a record from History or enable \'Override Oldest\' in Settings.';
+  }
 }

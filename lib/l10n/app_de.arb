@@ -23,5 +23,19 @@
   "clearHistoryWarning": "Dies wird alle Ihre BPM-Aufzeichnungen dauerhaft löschen.",
   "cancel": "ABBRECHEN",
   "clear": "LÖSCHEN",
-  "historyCleared": "Verlauf gelöscht"
+  "historyCleared": "Verlauf gelöscht",
+  "saveNameTitle": "SITZUNG BENENNEN",
+  "renameRecord": "AUFZEICHNUNG UMBENENNEN",
+  "nameHint": "Sitzungsname eingeben (optional)",
+  "unnamed": "Unbenannt",
+  "overrideOldest": "Älteste Aufzeichnungen überschreiben",
+  "historyFull": "VERLAUF VOLL",
+  "maxRecordsReached": "Verlaufslimit erreicht ({limit} Aufzeichnungen). Um neue Messungen zu speichern, lösche eine Aufzeichnung im Verlauf oder aktiviere 'Älteste überschreiben' in den Einstellungen.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

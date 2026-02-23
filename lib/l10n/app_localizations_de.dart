@@ -83,4 +83,27 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get historyCleared => 'Verlauf gelöscht';
+
+  @override
+  String get saveNameTitle => 'SITZUNG BENENNEN';
+
+  @override
+  String get renameRecord => 'AUFZEICHNUNG UMBENENNEN';
+
+  @override
+  String get nameHint => 'Sitzungsname eingeben (optional)';
+
+  @override
+  String get unnamed => 'Unbenannt';
+
+  @override
+  String get overrideOldest => 'Älteste Aufzeichnungen überschreiben';
+
+  @override
+  String get historyFull => 'VERLAUF VOLL';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return 'Verlaufslimit erreicht ($limit Aufzeichnungen). Um neue Messungen zu speichern, lösche eine Aufzeichnung im Verlauf oder aktiviere \'Älteste überschreiben\' in den Einstellungen.';
+  }
 }

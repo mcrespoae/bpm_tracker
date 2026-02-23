@@ -82,4 +82,27 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get historyCleared => '履歴を消去しました';
+
+  @override
+  String get saveNameTitle => 'セッションに名前を付ける';
+
+  @override
+  String get renameRecord => '記録の名前を変更';
+
+  @override
+  String get nameHint => 'セッション名を入力（任意）';
+
+  @override
+  String get unnamed => '無題';
+
+  @override
+  String get overrideOldest => '最も古い記録を上書き';
+
+  @override
+  String get historyFull => '履歴がいっぱいです';
+
+  @override
+  String maxRecordsReached(int limit) {
+    return '履歴の上限（$limit件）に達しました。新しい計測値を保存するには、履歴から記録を削除するか、設定で「最も古い記録を上書き」を有効にしてください。';
+  }
 }

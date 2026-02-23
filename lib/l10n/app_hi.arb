@@ -23,5 +23,19 @@
   "clearHistoryWarning": "यह आपके सभी BPM रिकॉर्ड को स्थायी रूप से हटा देगा।",
   "cancel": "रद्द करें",
   "clear": "साफ़ करें",
-  "historyCleared": "इतिहास साफ़ किया गया"
+  "historyCleared": "इतिहास साफ़ किया गया",
+  "saveNameTitle": "सत्र का नाम रखें",
+  "renameRecord": "रिकॉर्ड का नाम बदलें",
+  "nameHint": "सत्र का नाम दर्ज करें (वैकल्पिक)",
+  "unnamed": "बेनाम",
+  "overrideOldest": "सबसे पुराने रिकॉर्ड बदलें",
+  "historyFull": "इतिहास भर गया",
+  "maxRecordsReached": "इतिहास की सीमा ({limit} रिकॉर्ड) पूरी हो गई है। नए माप सहेजने के लिए, इतिहास से एक रिकॉर्ड हटाएं या सेटिंग्स में 'सबसे पुराने रिकॉर्ड बदलें' को सक्षम करें।",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

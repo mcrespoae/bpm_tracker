@@ -23,5 +23,19 @@
   "clearHistoryWarning": "Cela effacera définitivement tous vos enregistrements BPM.",
   "cancel": "ANNULER",
   "clear": "EFFACER",
-  "historyCleared": "Historique effacé"
+  "historyCleared": "Historique effacé",
+  "saveNameTitle": "NOMMER VOTRE SESSION",
+  "renameRecord": "RENOMMER L'ENREGISTREMENT",
+  "nameHint": "Entrez le nom de la session (facultatif)",
+  "unnamed": "Sans nom",
+  "overrideOldest": "Écraser les plus anciens",
+  "historyFull": "HISTORIQUE PLEIN",
+  "maxRecordsReached": "Limite d'historique atteinte ({limit} enregistrements). Pour enregistrer de nouvelles mesures, supprimez un enregistrement de l'Historique ou activez 'Écraser les plus anciens' dans les Réglages.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -23,5 +23,19 @@
   "clearHistoryWarning": "Questo eliminerà permanentemente tutti i tuoi record BPM.",
   "cancel": "ANNULLA",
   "clear": "CANCELLA",
-  "historyCleared": "Cronologia cancellata"
+  "historyCleared": "Cronologia cancellata",
+  "saveNameTitle": "NOMINA LA TUA SESSIONE",
+  "renameRecord": "RINOMINA RECORD",
+  "nameHint": "Inserisci il nome della sessione (opzionale)",
+  "unnamed": "Senza nome",
+  "overrideOldest": "Sovrascrivi i più vecchi",
+  "historyFull": "CRONOLOGIA PIENA",
+  "maxRecordsReached": "Limite cronologia raggiunto ({limit} record). Per salvare nuove misurazioni, elimina un record dalla Cronologia o abilita 'Sovrascrivi i più vecchi' nelle Impostazioni.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -72,6 +72,8 @@ class SettingsPage extends ConsumerWidget {
                       const SizedBox(height: 16),
                       _buildSectionHeader(context, l10n.preferences),
                       _buildHapticToggle(ref, settings.isHapticsEnabled, l10n.hapticFeedback),
+                      const SizedBox(height: 12),
+                      _buildOverrideToggle(ref, settings.isOverrideEnabled, l10n.overrideOldest),
                     ],
                   ),
                 ),
@@ -201,6 +203,30 @@ class SettingsPage extends ConsumerWidget {
             activeTrackColor: AppColors.primary,
             activeThumbColor: Colors.white,
             onChanged: (val) => ref.read(settingsProvider.notifier).toggleHaptics(val),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOverrideToggle(WidgetRef ref, bool value, String label) {
+    return GlassContainer(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.history, color: AppColors.primary, size: 20),
+              const SizedBox(width: 16),
+              Text(label, style: const TextStyle(color: Colors.white)),
+            ],
+          ),
+          Switch.adaptive(
+            value: value,
+            activeTrackColor: AppColors.primary,
+            activeThumbColor: Colors.white,
+            onChanged: (val) => ref.read(settingsProvider.notifier).toggleOverride(val),
           ),
         ],
       ),

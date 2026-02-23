@@ -23,5 +23,19 @@
   "clearHistoryWarning": "This will permanently delete all your BPM records.",
   "cancel": "CANCEL",
   "clear": "CLEAR",
-  "historyCleared": "History cleared"
+  "historyCleared": "History cleared",
+  "saveNameTitle": "NAME YOUR SESSION",
+  "renameRecord": "RENAME RECORD",
+  "nameHint": "Enter session name (optional)",
+  "unnamed": "Unnamed",
+  "overrideOldest": "Override Oldest Records",
+  "historyFull": "HISTORY FULL",
+  "maxRecordsReached": "History limit reached ({limit} records). To save new measurements, delete a record from History or enable 'Override Oldest' in Settings.",
+  "@maxRecordsReached": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  }
 }
