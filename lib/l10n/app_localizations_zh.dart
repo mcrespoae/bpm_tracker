@@ -105,4 +105,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return '已达到历史记录上限（$limit条）。要保存新测量值，请从历史记录中删除一条记录，或在设置中启用“覆盖最早的记录”。';
   }
+
+  @override
+  String get saveError => '无法保存记录';
 }

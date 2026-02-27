@@ -106,4 +106,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'History limit reached ($limit records). To save new measurements, delete a record from History or enable \'Override Oldest\' in Settings.';
   }
+
+  @override
+  String get saveError => 'FAILED TO SAVE RECORD';
 }

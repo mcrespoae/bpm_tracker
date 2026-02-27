@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,13 +38,17 @@ class SettingsNotifier extends Notifier<SettingsState> {
   }
 
   Future<void> _loadSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    final haptics = prefs.getBool(_hapticsKey) ?? true;
-    final override = prefs.getBool(_overrideKey) ?? true;
-    state = state.copyWith(
-      isHapticsEnabled: haptics,
-      isOverrideEnabled: override,
-    );
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final haptics = prefs.getBool(_hapticsKey) ?? true;
+      final override = prefs.getBool(_overrideKey) ?? true;
+      state = state.copyWith(
+        isHapticsEnabled: haptics,
+        isOverrideEnabled: override,
+      );
+    } catch (e) {
+      debugPrint('Failed to load settings: $e');
+    }
   }
 
   Future<void> toggleHaptics(bool value) async {

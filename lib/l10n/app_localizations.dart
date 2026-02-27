@@ -309,6 +309,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'History limit reached ({limit} records). To save new measurements, delete a record from History or enable \'Override Oldest\' in Settings.'**
   String maxRecordsReached(int limit);
+
+  /// No description provided for @saveError.
+  ///
+  /// In en, this message translates to:
+  /// **'FAILED TO SAVE RECORD'**
+  String get saveError;
 }
 
 class _AppLocalizationsDelegate

@@ -106,4 +106,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'Limite de histórico atingido ($limit registros). Para salvar novas medições, exclua um registro do Histórico ou ative \'Substituir mais antigos\' nos Ajustes.';
   }
+
+  @override
+  String get saveError => 'FALHA AO SALVAR REGISTRO';
 }

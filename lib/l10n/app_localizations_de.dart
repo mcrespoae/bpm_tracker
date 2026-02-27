@@ -106,4 +106,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'Verlaufslimit erreicht ($limit Aufzeichnungen). Um neue Messungen zu speichern, lösche eine Aufzeichnung im Verlauf oder aktiviere \'Älteste überschreiben\' in den Einstellungen.';
   }
+
+  @override
+  String get saveError => 'SPEICHERN FEHLGESCHLAGEN';
 }

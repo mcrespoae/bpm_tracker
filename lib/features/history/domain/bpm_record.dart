@@ -26,9 +26,16 @@ class BPMRecord {
   }
 
   factory BPMRecord.fromMap(Map<String, dynamic> map) {
+    DateTime parsedDate;
+    try {
+      parsedDate = DateTime.parse(map['timestamp']);
+    } catch (_) {
+      parsedDate = DateTime.now();
+    }
+
     return BPMRecord(
       bpm: map['bpm']?.toInt() ?? 0,
-      timestamp: DateTime.parse(map['timestamp']),
+      timestamp: parsedDate,
       accuracy: (map['accuracy'] ?? 0.0).toDouble(),
       stdDev: (map['stdDev'] ?? 0.0).toDouble(),
       name: map['name'] ?? 'Unnamed',

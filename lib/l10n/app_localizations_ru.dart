@@ -105,4 +105,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'Лимит истории достигнут ($limit записей). Чтобы сохранить новые измерения, удалите запись из Истории или включите «Перезаписывать старые записи» в Настройках.';
   }
+
+  @override
+  String get saveError => 'ОШИБКА СОХРАНЕНИЯ ЗАПИСИ';
 }

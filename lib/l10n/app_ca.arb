@@ -30,12 +30,13 @@
   "unnamed": "Sense nom",
   "overrideOldest": "Sobreescriure antics",
   "historyFull": "HISTORIAL PLE",
-  "maxRecordsReached": "Historial ple ({limit} registres). Esborra registres o activa sobreescriure.",
+  "maxRecordsReached": "Límit d'historial assolit ({limit} registres). Per desar noves mesures, elimina un registre de l'Historial o activa 'Sobreescriure antics' als Ajustos.",
   "@maxRecordsReached": {
     "placeholders": {
       "limit": {
         "type": "int"
       }
     }
-  }
+  },
+  "saveError": "ERROR EN DESAR EL REGISTRE"
 }

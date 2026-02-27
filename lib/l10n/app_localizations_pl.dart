@@ -106,4 +106,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'Osiągnięto limit historii ($limit rekordów). Aby zapisać nowe pomiary, usuń rekord z Historii lub włącz \'Nadpisuj najstarsze\' w Ustawieniach.';
   }
+
+  @override
+  String get saveError => 'BŁĄD ZAPISU REKORDU';
 }

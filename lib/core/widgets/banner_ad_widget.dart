@@ -12,6 +12,7 @@ class BannerAdWidget extends StatefulWidget {
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
+  bool _loadFailed = false;
 
   @override
   void initState() {
@@ -35,11 +36,15 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           debugPrint('$ad loaded.');
           setState(() {
             _isLoaded = true;
+            _loadFailed = false;
           });
         },
         onAdFailedToLoad: (ad, error) {
           debugPrint('$ad failed to load: $error');
           ad.dispose();
+          setState(() {
+            _loadFailed = true;
+          });
         },
       ),
     )..load();
@@ -61,8 +66,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
       );
     }
 
-    // If ad is not supported or still loading
-    if (AdHelper.bannerAdUnitId == null) {
+    // If ad is not supported or failed to load, don't show any placeholder
+    if (AdHelper.bannerAdUnitId == null || _loadFailed) {
       return const SizedBox.shrink();
     }
 

@@ -246,9 +246,24 @@ class HistoryPage extends ConsumerWidget {
             child: Text(l10n.cancel, style: const TextStyle(color: Colors.white38)),
           ),
           ElevatedButton(
-            onPressed: () {
-              ref.read(historyProvider.notifier).updateRecordName(index, controller.text.trim());
+            onPressed: () async {
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final String newName = controller.text.trim();
+
               Navigator.pop(context);
+
+              final success = await ref.read(historyProvider.notifier).updateRecordName(index, newName);
+
+              if (!success) {
+                const Color softRed = Color(0xFFFF6B6B);
+                scaffoldMessenger.showSnackBar(
+                  SnackBar(
+                    content: Text(l10n.saveError, textAlign: TextAlign.center),
+                    backgroundColor: softRed.withValues(alpha: 0.8),
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,

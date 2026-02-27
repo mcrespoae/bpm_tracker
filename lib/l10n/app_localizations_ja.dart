@@ -103,6 +103,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String maxRecordsReached(int limit) {
-    return '履歴の上限（$limit件）に達しました。新しい計測値を保存するには、履歴から記録を削除するか、設定で「最も古い記録を上書き」を有効にしてください。';
+    return '履歴の上限に達しました（$limit 件）。新しい測定値を保存するには、履歴からレコードを削除するか、設定で「古いレコードを上書きする」を有効にしてください。';
   }
+
+  @override
+  String get saveError => '記録の保存に失敗しました';
 }

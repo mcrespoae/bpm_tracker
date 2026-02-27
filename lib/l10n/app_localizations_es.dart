@@ -104,6 +104,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String maxRecordsReached(int limit) {
-    return 'Historial lleno ($limit registros). Borre registros o active sobrescribir.';
+    return 'Límite de historial alcanzado ($limit registros). Para guardar nuevas mediciones, elimina un registro del Historial o activa \'Sobrescribir antiguos\' en Ajustes.';
   }
+
+  @override
+  String get saveError => 'ERROR AL GUARDAR EL REGISTRO';
 }

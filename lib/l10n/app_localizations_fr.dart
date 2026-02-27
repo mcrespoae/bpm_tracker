@@ -106,4 +106,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'Limite d\'historique atteinte ($limit enregistrements). Pour enregistrer de nouvelles mesures, supprimez un enregistrement de l\'Historique ou activez \'Écraser les plus anciens\' dans les Réglages.';
   }
+
+  @override
+  String get saveError => 'ÉCHEC DE L\'ENREGISTREMENT';
 }

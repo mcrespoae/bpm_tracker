@@ -106,4 +106,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'इतिहास की सीमा ($limit रिकॉर्ड) पूरी हो गई है। नए माप सहेजने के लिए, इतिहास से एक रिकॉर्ड हटाएं या सेटिंग्स में \'सबसे पुराने रिकॉर्ड बदलें\' को सक्षम करें।';
   }
+
+  @override
+  String get saveError => 'रिकॉर्ड सहेजने में विफल';
 }

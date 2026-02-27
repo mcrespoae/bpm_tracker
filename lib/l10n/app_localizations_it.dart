@@ -106,4 +106,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String maxRecordsReached(int limit) {
     return 'Limite cronologia raggiunto ($limit record). Per salvare nuove misurazioni, elimina un record dalla Cronologia o abilita \'Sovrascrivi i più vecchi\' nelle Impostazioni.';
   }
+
+  @override
+  String get saveError => 'ERRORE NEL SALVATAGGIO';
 }

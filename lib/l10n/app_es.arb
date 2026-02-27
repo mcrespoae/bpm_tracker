@@ -30,12 +30,13 @@
   "unnamed": "Sin nombre",
   "overrideOldest": "Sobrescribir antiguos",
   "historyFull": "HISTORIAL LLENO",
-  "maxRecordsReached": "Historial lleno ({limit} registros). Borre registros o active sobrescribir.",
+  "maxRecordsReached": "Límite de historial alcanzado ({limit} registros). Para guardar nuevas mediciones, elimina un registro del Historial o activa 'Sobrescribir antiguos' en Ajustes.",
   "@maxRecordsReached": {
     "placeholders": {
       "limit": {
         "type": "int"
       }
     }
-  }
+  },
+  "saveError": "ERROR AL GUARDAR EL REGISTRO"
 }

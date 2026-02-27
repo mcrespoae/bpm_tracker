@@ -104,6 +104,9 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String maxRecordsReached(int limit) {
-    return 'Historial ple ($limit registres). Esborra registres o activa sobreescriure.';
+    return 'Límit d\'historial assolit ($limit registres). Per desar noves mesures, elimina un registre de l\'Historial o activa \'Sobreescriure antics\' als Ajustos.';
   }
+
+  @override
+  String get saveError => 'ERROR EN DESAR EL REGISTRE';
 }

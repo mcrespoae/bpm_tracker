@@ -330,28 +330,60 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
             child: Text(l10n.cancel, style: const TextStyle(color: Colors.white38)),
           ),
           ElevatedButton(
-            onPressed: () {
-              ref.read(historyProvider.notifier).addRecord(bpm, accuracy, stdDev, controller.text.trim());
-              ref.read(bpmProvider.notifier).reset();
+            onPressed: () async {
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final mediaQuery = MediaQuery.of(context);
+              final String sessionName = controller.text.trim();
+              const Color softRed = Color(0xFFFF6B6B);
+
+              // Closing dialog first to avoid blocking the UI
               Navigator.pop(context);
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(l10n.recordSaved, textAlign: TextAlign.center),
-                  backgroundColor: AppColors.primary.withValues(alpha: 0.7),
-                  behavior: SnackBarBehavior.floating,
-                  margin: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height - 130,
-                    left: 50,
-                    right: 50,
-                  ),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  duration: const Duration(seconds: 2),
-                ),
+              final success = await ref.read(historyProvider.notifier).addRecord(
+                bpm,
+                accuracy,
+                stdDev,
+                sessionName,
               );
+
+              if (success) {
+                ref.read(bpmProvider.notifier).reset();
+                scaffoldMessenger.showSnackBar(
+                  SnackBar(
+                    content: Text(l10n.recordSaved, textAlign: TextAlign.center),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.7),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.only(
+                      bottom: mediaQuery.size.height - 130,
+                      left: 50,
+                      right: 50,
+                    ),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              } else {
+                scaffoldMessenger.showSnackBar(
+                  SnackBar(
+                    content: Text(l10n.saveError, textAlign: TextAlign.center),
+                    backgroundColor: softRed.withValues(alpha: 0.8),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.only(
+                      bottom: mediaQuery.size.height - 130,
+                      left: 50,
+                      right: 50,
+                    ),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    duration: const Duration(seconds: 3),
+                  ),
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
