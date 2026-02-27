@@ -9,6 +9,7 @@ import 'package:metra/core/widgets/banner_ad_widget.dart';
 import 'package:metra/features/history/presentation/history_page.dart';
 import 'package:metra/features/history/presentation/history_provider.dart';
 import 'package:metra/features/tracker/presentation/providers/bpm_provider.dart';
+import 'package:metra/features/tracker/domain/bpm_calculator.dart';
 import 'package:metra/features/settings/presentation/settings_page.dart';
 import 'package:metra/features/settings/presentation/settings_provider.dart';
 
@@ -153,7 +154,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                             SizedBox(
                               height: 30,
                               child: Center(
-                                child: (bpmState.taps.length >= 4)
+                                child: (bpmState.taps.length >= BPMCalculator.minTapsForStats)
                                     ? Text(
                                         '±${bpmState.stdDev.toStringAsFixed(1)} ms · ${bpmState.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
                                         style: TextStyle(
@@ -311,17 +312,20 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
         backgroundColor: const Color(0xFF1A1A1A),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white10)),
         title: Text(l10n.saveNameTitle, style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 1)),
-        content: TextField(
-          controller: controller,
-          maxLength: 50,
-          autofocus: true,
-          style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: l10n.nameHint,
-            hintStyle: const TextStyle(color: Colors.white24),
-            counterStyle: const TextStyle(color: Colors.white24),
-            enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white10)),
-            focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+        content: SizedBox(
+          width: 300,
+          child: TextField(
+            controller: controller,
+            maxLength: 30,
+            autofocus: true,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: l10n.nameHint,
+              hintStyle: const TextStyle(color: Colors.white24),
+              counterStyle: const TextStyle(color: Colors.white24),
+              enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white10)),
+              focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+            ),
           ),
         ),
         actions: [

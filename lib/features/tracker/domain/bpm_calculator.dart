@@ -10,6 +10,7 @@ class BPMStats {
 
 class BPMCalculator {
   static const int maxTaps = 25;
+  static const int minTapsForStats = 4;
   static const int timeoutMs = 2000;
 
   static BPMStats calculateStats(List<DateTime> taps) {

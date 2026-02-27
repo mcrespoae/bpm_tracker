@@ -73,8 +73,10 @@ class BPMNotifier extends Notifier<BPMState> {
 
     // Start inactivity timer
     _inactivityTimer = Timer(const Duration(seconds: 2), () {
-      if (state.taps.length >= 2) {
+      if (state.taps.length >= BPMCalculator.minTapsForStats) {
         _finishSession();
+      } else if (state.taps.isNotEmpty) {
+        reset();
       }
     });
   }

@@ -88,110 +88,14 @@ class HistoryPage extends ConsumerWidget {
                       itemCount: history.length,
                       itemBuilder: (context, index) {
                         final record = history[index];
-                        final date = DateFormat('MMM dd, yyyy HH:mm').format(record.timestamp);
-
-                        const Color softRed = Color(0xFFFF6B6B);
-                        Color accuracyColor = AppColors.textSecondary;
-                        if (record.accuracy < 80) {
-                          accuracyColor = softRed;
-                        } else if (record.accuracy > 90) {
-                          accuracyColor = const Color(0xFF00FF95);
-                        }
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: Dismissible(
-                            key: Key('record_${record.timestamp.millisecondsSinceEpoch}'),
-                            direction: DismissDirection.horizontal,
-                            confirmDismiss: (direction) async {
-                              if (direction == DismissDirection.startToEnd) {
-                                // Rename
-                                await _showRenameDialog(context, ref, record, index);
-                                return false; // Don't dismiss for rename
-                              }
-                              return true; // Dismiss for delete
-                            },
-                            onDismissed: (direction) {
-                              if (direction == DismissDirection.endToStart) {
-                                ref.read(historyProvider.notifier).removeRecord(index);
-                              }
-                            },
-                            background: Container(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.only(left: 20),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Icon(Icons.edit, color: AppColors.primary),
-                            ),
-                            secondaryBackground: Container(
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.only(right: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.red.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Icon(Icons.delete, color: Colors.redAccent),
-                            ),
-                            child: GlassContainer(
-                              padding: const EdgeInsets.all(16),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      '${record.bpm}',
-                                      style: const TextStyle(
-                                        color: AppColors.primary,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              record.name,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              '±${record.stdDev.toStringAsFixed(1)} ms · ${record.accuracy.toStringAsFixed(1)}% ${l10n.acc}',
-                                              style: TextStyle(
-                                                color: accuracyColor,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          date,
-                                          style: const TextStyle(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          child: _HistoryRecordItem(
+                            record: record,
+                            index: index,
+                            l10n: l10n,
+                            onRename: () => _showRenameDialog(context, ref, record, index),
                           ),
                         );
                       },
@@ -227,17 +131,20 @@ class HistoryPage extends ConsumerWidget {
         backgroundColor: const Color(0xFF1A1A1A),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: Colors.white10)),
         title: Text(l10n.renameRecord, style: const TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 1)),
-        content: TextField(
-          controller: controller,
-          maxLength: 50,
-          autofocus: true,
-          style: const TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: l10n.nameHint,
-            hintStyle: const TextStyle(color: Colors.white24),
-            counterStyle: const TextStyle(color: Colors.white24),
-            enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white10)),
-            focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+        content: SizedBox(
+          width: 300,
+          child: TextField(
+            controller: controller,
+            maxLength: 30,
+            autofocus: true,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: l10n.nameHint,
+              hintStyle: const TextStyle(color: Colors.white24),
+              counterStyle: const TextStyle(color: Colors.white24),
+              enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white10)),
+              focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+            ),
           ),
         ),
         actions: [
@@ -272,6 +179,191 @@ class HistoryPage extends ConsumerWidget {
             child: Text(l10n.save),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _HistoryRecordItem extends ConsumerStatefulWidget {
+  final BPMRecord record;
+  final int index;
+  final AppLocalizations l10n;
+  final VoidCallback onRename;
+
+  const _HistoryRecordItem({
+    required this.record,
+    required this.index,
+    required this.l10n,
+    required this.onRename,
+  });
+
+  @override
+  ConsumerState<_HistoryRecordItem> createState() => _HistoryRecordItemState();
+}
+
+class _HistoryRecordItemState extends ConsumerState<_HistoryRecordItem> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolling = false;
+
+  void _onTap() async {
+    if (_isScrolling || !_scrollController.hasClients) return;
+    if (_scrollController.position.maxScrollExtent <= 0) return;
+
+    // Set this index as the active scroll
+    ref.read(scrollingRecordIndexProvider.notifier).setIndex(widget.index);
+    setState(() => _isScrolling = true);
+
+    await _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: _scrollController.position.maxScrollExtent.toInt() * 40),
+      curve: Curves.linear,
+    );
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (mounted && _isScrolling) {
+      await _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.easeOut,
+      );
+      if (mounted) {
+        setState(() => _isScrolling = false);
+        if (ref.read(scrollingRecordIndexProvider) == widget.index) {
+          ref.read(scrollingRecordIndexProvider.notifier).setIndex(null);
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Listen for changes in the active scroll index
+    ref.listen<int?>(scrollingRecordIndexProvider, (previous, next) {
+      if (next != widget.index && _isScrolling) {
+        // Someone else started scrolling, stop this one and reset
+        _scrollController.jumpTo(0);
+        setState(() => _isScrolling = false);
+      }
+    });
+
+    final date = DateFormat('MMM dd, yyyy HH:mm').format(widget.record.timestamp);
+    const Color softRed = Color(0xFFFF6B6B);
+    Color accuracyColor = AppColors.textSecondary;
+    if (widget.record.accuracy < 80) {
+      accuracyColor = softRed;
+    } else if (widget.record.accuracy > 90) {
+      accuracyColor = const Color(0xFF00FF95);
+    }
+
+    return Dismissible(
+      key: Key('record_${widget.record.timestamp.millisecondsSinceEpoch}'),
+      direction: DismissDirection.horizontal,
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.startToEnd) {
+          widget.onRename();
+          return false;
+        }
+        return true;
+      },
+      onDismissed: (direction) {
+        if (direction == DismissDirection.endToStart) {
+          ref.read(historyProvider.notifier).removeRecord(widget.index);
+        }
+      },
+      background: Container(
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.only(left: 20),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Icon(Icons.edit, color: AppColors.primary),
+      ),
+      secondaryBackground: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+          color: Colors.red.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Icon(Icons.delete, color: Colors.redAccent),
+      ),
+      child: GestureDetector(
+        onTap: _onTap,
+        child: GlassContainer(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${widget.record.bpm}',
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            child: Text(
+                              widget.record.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '±${widget.record.stdDev.toStringAsFixed(1)} ms · ${widget.record.accuracy.toStringAsFixed(1)}% ${widget.l10n.acc}',
+                          style: TextStyle(
+                            color: accuracyColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      date,
+                      style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

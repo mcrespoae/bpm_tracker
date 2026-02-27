@@ -126,3 +126,16 @@ class HistoryNotifier extends AsyncNotifier<List<BPMRecord>> {
 final historyProvider = AsyncNotifierProvider<HistoryNotifier, List<BPMRecord>>(() {
   return HistoryNotifier();
 });
+
+class ScrollingRecordNotifier extends Notifier<int?> {
+  @override
+  int? build() => null;
+
+  void setIndex(int? index) {
+    state = index;
+  }
+}
+
+final scrollingRecordIndexProvider = NotifierProvider<ScrollingRecordNotifier, int?>(() {
+  return ScrollingRecordNotifier();
+});
