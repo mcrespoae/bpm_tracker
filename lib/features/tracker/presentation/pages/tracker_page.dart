@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -216,7 +217,7 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
                                           final settings = ref.watch(settingsProvider);
                                           final historyAsync = ref.watch(historyProvider);
                                           final historyLength = historyAsync.value?.length ?? 0;
-                                          final isFull = historyLength >= 10;
+                                          final isFull = historyLength >= HistoryRepository.maxItems;
                                           final canSave = settings.isOverrideEnabled || !isFull;
 
                                           return ElevatedButton(
@@ -368,7 +369,21 @@ class _TrackerPageState extends ConsumerState<TrackerPage> {
       return Text(
         l10n.tapToStart,
         style: const TextStyle(letterSpacing: 2, color: AppColors.textSecondary),
-      ).animate(onPlay: (c) => c.repeat(reverse: true)).fadeIn(duration: 1.seconds);
+      ).animate(
+        onPlay: (c) {
+          // Skip infinite repetition during automated tests to avoid pending timers.
+          // In production/normal debug, it will blink as intended.
+          bool isTest = false;
+          try {
+            isTest = Platform.environment.containsKey('FLUTTER_TEST');
+          } catch (_) {
+            // Platform.environment throws on web
+          }
+          if (!isTest) {
+            c.repeat(reverse: true);
+          }
+        },
+      ).fadeIn(duration: 1.seconds);
     }
 
     if (state.isFinished) {

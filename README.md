@@ -9,8 +9,8 @@ A premium, high-precision BPM (Beats Per Minute) tracking application built with
 - **Accuracy HUD**: Real-time display of ± Standard Deviation and Accuracy % (Coefficient of Variation).
 - **Intelligent Inactivity Detection**: Auto-finalizes measurements after 2 seconds of inactivity.
 - **Premium UI**: Dark mode with smooth glassmorphism effects and reactive animations.
-- **Multi-Language Support**: Fully localized into 11 languages (English, Spanish, Portuguese, French, German, Italian, Polish, Japanese, Chinese Simplified, Hindi, Russian).
-- **Persistent History**: Keeps the latest 10 measurements with swipe-to-delete support.
+- **Multi-Language Support**: Fully localized into 12 languages (English, Spanish, Catalan, Portuguese, French, German, Italian, Polish, Japanese, Chinese Simplified, Hindi, Russian).
+- **Persistent History**: Keeps the latest 20 measurements with swipe-to-delete support.
 - **Smart Ad Integration**: Environment-aware AdMob implementation (Test ads in debug, Real ads in release).
 
 ---
@@ -52,6 +52,19 @@ To apply changes made to the `.arb` files or add new languages:
 ```bash
 flutter gen-l10n
 ```
+
+### Testing & Verification
+METRA includes a comprehensive test suite to ensure the accuracy of the rhythm engine and UI stability.
+
+1.  **Run all tests**:
+    ```bash
+    flutter test
+    ```
+
+**Test Coverage:**
+-   **Unit Tests**: Mathematically verifies the `BPMCalculator`'s plateau, exponential decay, and recovery logic.
+-   **Config Tests**: Verifies history limits and localization registration.
+-   **Widget Tests**: UI smoke tests with mocked dependencies.
 
 ### Creating Builds
 
