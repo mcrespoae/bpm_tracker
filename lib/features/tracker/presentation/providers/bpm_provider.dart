@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:metra/features/tracker/domain/bpm_calculator.dart';
 import 'package:metra/features/settings/presentation/settings_provider.dart';
+import 'package:metra/core/services/haptic_service.dart';
 
 class BPMState {
   final int bpm;
@@ -53,9 +53,9 @@ class BPMNotifier extends Notifier<BPMState> {
     }
     _inactivityTimer?.cancel();
 
-    // Haptic feedback on tap
+    // Haptic feedback on tap using Service
     if (_hapticsEnabled) {
-      HapticFeedback.lightImpact();
+      ref.read(hapticServiceProvider).playTap();
     }
 
     final now = DateTime.now();
@@ -83,7 +83,7 @@ class BPMNotifier extends Notifier<BPMState> {
 
   void _finishSession() {
     if (_hapticsEnabled) {
-      HapticFeedback.heavyImpact();
+      ref.read(hapticServiceProvider).playSuccess();
     }
     state = state.copyWith(isFinished: true);
   }
